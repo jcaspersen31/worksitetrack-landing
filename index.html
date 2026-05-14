@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WorksiteTrack — Construction Management That Grows With You</title>
+  <meta name="description" content="Construction project management built for contractors of all sizes. Track specs, submittals, work items, inspections, scheduling and more. Starts at $99/month." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #0B1F3A;
+      --navy2:   #142E52;
+      --orange:  #D85A30;
+      --orange2: #F07040;
+      --slate:   #64748b;
+      --light:   #F4F3EF;
+      --white:   #ffffff;
+      --border:  #E5E3DC;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 64px;
+      background: rgba(11,31,58,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px; color: var(--white); letter-spacing: -0.5px;
+    }
+    .nav-logo span { color: var(--orange); }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      color: rgba(255,255,255,0.7); text-decoration: none;
+      font-size: 14px; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .btn-demo {
+      background: var(--orange); color: var(--white);
+      padding: 9px 20px; border-radius: 8px;
+      font-size: 14px; font-weight: 600;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .btn-demo:hover { background: var(--orange2); color: var(--white) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: flex; align-items: center;
+      padding: 120px 48px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(216,90,48,0.12) 0%, transparent 60%),
+                  radial-gradient(ellipse at 20% 80%, rgba(20,46,82,0.8) 0%, transparent 50%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; opacity: 0.04;
+      background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 680px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(216,90,48,0.15); border: 1px solid rgba(216,90,48,0.3);
+      color: var(--orange2); padding: 6px 14px; border-radius: 100px;
+      font-size: 13px; font-weight: 600; margin-bottom: 28px;
+      letter-spacing: 0.3px;
+    }
+    .hero-badge::before { content: '●'; font-size: 8px; }
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(42px, 6vw, 72px);
+      color: var(--white); line-height: 1.08;
+      letter-spacing: -1px; margin-bottom: 24px;
+    }
+    h1 em { color: var(--orange); font-style: italic; }
+    .hero-sub {
+      font-size: 18px; color: rgba(255,255,255,0.65);
+      line-height: 1.65; margin-bottom: 40px; max-width: 520px;
+      font-weight: 400;
+    }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--orange); color: var(--white);
+      padding: 14px 28px; border-radius: 10px;
+      font-size: 15px; font-weight: 700;
+      text-decoration: none; transition: all 0.2s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { background: var(--orange2); transform: translateY(-1px); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white); padding: 14px 28px; border-radius: 10px;
+      font-size: 15px; font-weight: 600;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.14); }
+    .hero-stats {
+      display: flex; gap: 48px; margin-top: 64px;
+      padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .hero-stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 36px; color: var(--white); line-height: 1;
+    }
+    .hero-stat-num span { color: var(--orange); }
+    .hero-stat-label { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+
+    /* ── SCREENSHOT ── */
+    .screenshot-section {
+      background: var(--navy2);
+      padding: 0 48px 80px;
+    }
+    .screenshot-container {
+      max-width: 1100px; margin: 0 auto;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+    }
+    .screenshot-bar {
+      background: rgba(0,0,0,0.3);
+      padding: 12px 16px;
+      display: flex; align-items: center; gap: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .screenshot-placeholder {
+      height: 480px;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, rgba(11,31,58,0.8) 0%, rgba(20,46,82,0.6) 100%);
+      flex-direction: column; gap: 16px;
+    }
+    .screenshot-placeholder p {
+      color: rgba(255,255,255,0.3); font-size: 13px;
+      font-style: italic;
+    }
+    .screenshot-img {
+      width: 100%; display: block;
+      border-radius: 0;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 48px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-tag {
+      font-size: 12px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--orange);
+      margin-bottom: 14px;
+    }
+    h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 4vw, 52px);
+      color: var(--navy); line-height: 1.1;
+      letter-spacing: -0.5px; margin-bottom: 20px;
+    }
+    h2 em { color: var(--orange); font-style: italic; }
+    .section-sub {
+      font-size: 17px; color: var(--slate);
+      line-height: 1.7; max-width: 560px; margin-bottom: 60px;
+    }
+
+    /* ── FEATURES ── */
+    .features-bg { background: var(--light); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+    }
+    .feature-card {
+      background: var(--white);
+      padding: 36px 32px;
+      transition: background 0.2s;
+    }
+    .feature-card:hover { background: #faf9f6; }
+    .feature-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: var(--navy); display: flex;
+      align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 18px;
+    }
+    .feature-title {
+      font-size: 17px; font-weight: 700;
+      color: var(--navy); margin-bottom: 10px;
+    }
+    .feature-desc {
+      font-size: 14px; color: var(--slate);
+      line-height: 1.65;
+    }
+    .feature-tag {
+      display: inline-block; margin-top: 14px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+      text-transform: uppercase; padding: 3px 8px; border-radius: 4px;
+    }
+    .tag-base { background: #dbeafe; color: #1e40af; }
+    .tag-module { background: #fef3c7; color: #92400e; }
+
+    /* ── HOW IT WORKS ── */
+    .steps { display: flex; gap: 0; position: relative; margin-top: 60px; }
+    .steps::before {
+      content: '';
+      position: absolute; top: 28px; left: 28px; right: 28px; height: 1px;
+      background: var(--border); z-index: 0;
+    }
+    .step { flex: 1; text-align: center; position: relative; z-index: 1; padding: 0 20px; }
+    .step-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--navy); color: var(--white);
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px; display: flex; align-items: center;
+      justify-content: center; margin: 0 auto 20px;
+      border: 4px solid var(--white);
+      box-shadow: 0 0 0 1px var(--border);
+    }
+    .step-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+    .step-desc { font-size: 14px; color: var(--slate); line-height: 1.6; }
+
+    /* ── PRICING ── */
+    .pricing-bg { background: var(--navy); }
+    .pricing-bg h2 { color: var(--white); }
+    .pricing-bg .section-sub { color: rgba(255,255,255,0.6); }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px; margin-bottom: 48px;
+    }
+    .pricing-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px; padding: 36px 32px;
+    }
+    .pricing-card.featured {
+      background: var(--white);
+      border-color: var(--orange);
+      position: relative; overflow: hidden;
+    }
+    .pricing-card.featured::before {
+      content: 'Most Popular';
+      position: absolute; top: 16px; right: -28px;
+      background: var(--orange); color: var(--white);
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; padding: 4px 40px;
+      transform: rotate(45deg);
+    }
+    .pricing-name {
+      font-size: 13px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--orange);
+      margin-bottom: 8px;
+    }
+    .pricing-price {
+      font-family: 'DM Serif Display', serif;
+      font-size: 52px; color: var(--white); line-height: 1;
+      margin-bottom: 4px;
+    }
+    .pricing-card.featured .pricing-price { color: var(--navy); }
+    .pricing-period { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 24px; }
+    .pricing-card.featured .pricing-period { color: var(--slate); }
+    .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .pricing-features li {
+      font-size: 14px; color: rgba(255,255,255,0.75);
+      display: flex; align-items: flex-start; gap: 10px; line-height: 1.5;
+    }
+    .pricing-card.featured .pricing-features li { color: var(--navy); }
+    .pricing-features li::before { content: '✓'; color: var(--orange); font-weight: 700; flex-shrink: 0; }
+    .pricing-cta {
+      display: block; text-align: center;
+      margin-top: 28px; padding: 13px;
+      border-radius: 10px; font-weight: 700; font-size: 15px;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .pricing-cta-outline {
+      border: 1px solid rgba(255,255,255,0.25);
+      color: var(--white);
+    }
+    .pricing-cta-outline:hover { background: rgba(255,255,255,0.1); }
+    .pricing-cta-solid {
+      background: var(--orange); color: var(--white);
+    }
+    .pricing-cta-solid:hover { background: var(--orange2); }
+
+    .modules-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    }
+    .module-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px; padding: 20px;
+    }
+    .module-price {
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px; color: var(--orange);
+    }
+    .module-name { font-size: 14px; font-weight: 700; color: var(--white); margin: 4px 0; }
+    .module-desc { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+    /* ── DEMO FORM ── */
+    .demo-bg { background: var(--light); }
+    .demo-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      align-items: start;
+    }
+    .demo-form {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 40px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .form-group label { font-size: 13px; font-weight: 600; color: var(--navy); }
+    .form-group input, .form-group textarea, .form-group select {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px; font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      outline: none; transition: border-color 0.2s;
+      background: var(--white);
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--navy); }
+    .form-group textarea { min-height: 100px; resize: vertical; }
+    .form-submit {
+      width: 100%; padding: 14px;
+      background: var(--orange); color: var(--white);
+      border: none; border-radius: 10px;
+      font-size: 15px; font-weight: 700;
+      cursor: pointer; transition: background 0.2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .form-submit:hover { background: var(--orange2); }
+    .form-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .form-success {
+      text-align: center; padding: 40px 20px;
+    }
+    .form-success .check { font-size: 48px; margin-bottom: 16px; }
+    .form-success h3 { font-family: 'DM Serif Display', serif; font-size: 24px; margin-bottom: 8px; }
+    .form-success p { color: var(--slate); font-size: 15px; }
+
+    .demo-left h2 { margin-bottom: 16px; }
+    .demo-points { list-style: none; display: flex; flex-direction: column; gap: 18px; margin-top: 40px; }
+    .demo-points li {
+      display: flex; gap: 14px; align-items: flex-start;
+      font-size: 15px; color: var(--slate); line-height: 1.5;
+    }
+    .demo-point-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--navy); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      padding: 48px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 24px;
+    }
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px; color: var(--white);
+    }
+    .footer-logo span { color: var(--orange); }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a { color: rgba(255,255,255,0.5); font-size: 13px; text-decoration: none; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-copy { color: rgba(255,255,255,0.35); font-size: 12px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 24px 60px; }
+      section { padding: 70px 24px; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .modules-grid { grid-template-columns: repeat(2, 1fr); }
+      .demo-inner { grid-template-columns: 1fr; gap: 40px; }
+      .form-row { grid-template-columns: 1fr; }
+      .steps { flex-direction: column; }
+      .steps::before { display: none; }
+      footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
+      .screenshot-section { padding: 0 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Worksite<span>Track</span></div>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#demo" class="btn-demo">Request a Demo</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Now in beta</div>
+    <h1>Construction management that <em>grows with you</em></h1>
+    <p class="hero-sub">
+      Purpose-built for mechanical, HVAC, plumbing, and electrical contractors of all sizes.
+      From your first project to your fiftieth — WorksiteTrack handles the paperwork,
+      so your team can handle the work.
+    </p>
+    <div class="hero-ctas">
+      <a href="#demo" class="btn-primary">Request a Demo →</a>
+      <a href="#features" class="btn-secondary">See what's included</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">$99<span>/mo</span></div>
+        <div class="hero-stat-label">Starts at — up to 5 users</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">∞</div>
+        <div class="hero-stat-label">Time card-only users included</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">0</div>
+        <div class="hero-stat-label">Long-term contracts required</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCREENSHOT -->
+<div class="screenshot-section">
+  <div class="screenshot-container">
+    <div class="screenshot-bar">
+      <div class="dot" style="background:#FF5F57"></div>
+      <div class="dot" style="background:#FEBC2E"></div>
+      <div class="dot" style="background:#28C840"></div>
+    </div>
+    <div class="screenshot-placeholder">
+      <div style="font-size:48px;">📋</div>
+      <p>Screenshot coming soon — contact us for a live demo</p>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features-bg" id="features">
+  <div class="section-inner">
+    <div class="section-tag">Everything you need</div>
+    <h2>Built for the trades, <em>not the enterprise</em></h2>
+    <p class="section-sub">
+      No bloat. No six-month onboarding. WorksiteTrack gives your team the tools
+      that actually matter on a mechanical, plumbing, or electrical project.
+    </p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📁</div>
+        <div class="feature-title">Project Management</div>
+        <div class="feature-desc">Projects, RFIs, change orders, contacts, and document storage — all in one place. Your office and field on the same page.</div>
+        <span class="feature-tag tag-base">Base</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <div class="feature-title">Specifications & Submittals</div>
+        <div class="feature-desc">Track every spec section from CSI MasterFormat. Flag sections for submittals, O&Ms, inspections, and major equipment. Auto-populate from the CSI catalog.</div>
+        <span class="feature-tag tag-base">Base</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔧</div>
+        <div class="feature-title">Work Items</div>
+        <div class="feature-desc">Track equipment and materials from submittal approval to installation. Serial numbers, spare parts, field events, and manufacturer data all in one record.</div>
+        <span class="feature-tag tag-base">Base</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">✅</div>
+        <div class="feature-title">Test & Inspections</div>
+        <div class="feature-desc">Witnessed inspections with digital signatures captured on a tablet. Pass/fail/conditional results emailed to the witness immediately. Linked to spec sections.</div>
+        <span class="feature-tag tag-base">Base</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📅</div>
+        <div class="feature-title">Scheduling</div>
+        <div class="feature-desc">Cross-project calendar showing all crews by trade. Color-coded by Sheet Metal, Pipe Fitting, Plumbing, and more. See who's unscheduled at a glance.</div>
+        <span class="feature-tag tag-base">Base</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⏱</div>
+        <div class="feature-title">Time Cards</div>
+        <div class="feature-desc">Field employees clock in and out on their phones. Office reviews and approves. Unlimited time card-only users at no extra cost.</div>
+        <span class="feature-tag tag-base">Base</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛒</div>
+        <div class="feature-title">Purchasing</div>
+        <div class="feature-desc">Purchase orders, vendor management, and receiving. Link POs to projects and track what's been received against what was ordered.</div>
+        <span class="feature-tag tag-base">Base</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📐</div>
+        <div class="feature-title">PinPoint — Install Tracking</div>
+        <div class="feature-desc">Upload drawings and place pins on every work item. Track linear footage of ductwork, piping, and conduit directly on the drawing. Field and office see real progress.</div>
+        <span class="feature-tag tag-module">Add-on Module</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSEOUT -->
+<section>
+  <div class="section-inner">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;">
+      <div>
+        <div class="section-tag">Closeout made easy</div>
+        <h2>O&Ms and spare parts — <em>automatic</em></h2>
+        <p style="font-size:16px; color:var(--slate); line-height:1.7; margin-bottom:28px;">
+          WorksiteTrack tracks your spare parts and warranty information as you go.
+          At closeout, generate a professional O&M manual with a single click —
+          cover page, warranty, spare parts totals, and full equipment list with parts per unit.
+        </p>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:12px;">
+          <li style="display:flex; gap:12px; font-size:15px; color:var(--slate);">
+            <span style="color:var(--orange); font-weight:700;">✓</span>
+            Auto-generated table of contents from your spec sections
+          </li>
+          <li style="display:flex; gap:12px; font-size:15px; color:var(--slate);">
+            <span style="color:var(--orange); font-weight:700;">✓</span>
+            Warranty form with your company branding
+          </li>
+          <li style="display:flex; gap:12px; font-size:15px; color:var(--slate);">
+            <span style="color:var(--orange); font-weight:700;">✓</span>
+            Spare parts totals report — ready for purchasing or handoff to owner
+          </li>
+          <li style="display:flex; gap:12px; font-size:15px; color:var(--slate);">
+            <span style="color:var(--orange); font-weight:700;">✓</span>
+            Print to PDF or hand to the owner directly
+          </li>
+        </ul>
+      </div>
+      <div style="background:var(--light); border-radius:16px; padding:40px; border:1px solid var(--border);">
+        <div style="font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--slate); margin-bottom:20px;">Closeout documents</div>
+        <div style="display:flex; gap:12px; flex-direction:column;">
+          <div style="background:var(--white); border:1px solid var(--border); border-radius:10px; padding:16px 20px; display:flex; align-items:center; gap:14px;">
+            <div style="width:40px;height:40px;border-radius:10px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📋</div>
+            <div>
+              <div style="font-weight:700;font-size:14px;">O&M Report</div>
+              <div style="font-size:12px;color:var(--slate);">Cover · Warranty · Spare Parts · Equipment List</div>
+            </div>
+          </div>
+          <div style="background:var(--white); border:1px solid var(--border); border-radius:10px; padding:16px 20px; display:flex; align-items:center; gap:14px;">
+            <div style="width:40px;height:40px;border-radius:10px;background:#065f46;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🔧</div>
+            <div>
+              <div style="font-weight:700;font-size:14px;">Spare Parts Report</div>
+              <div style="font-size:12px;color:var(--slate);">Aggregated by type and size across all equipment</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section style="background:var(--light);" id="how-it-works">
+  <div class="section-inner">
+    <div class="section-tag">Simple by design</div>
+    <h2>Up and running <em>in a day</em></h2>
+    <p class="section-sub">No implementation consultants. No six-week training. Your team will know their way around before the week is out.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">We set you up</div>
+        <div class="step-desc">We create your company account, import your employees, and configure your modules. You're not doing this alone.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Start a project</div>
+        <div class="step-desc">Add your spec sections, assign work items, upload drawings, and invite your team. Everything connects automatically.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Track it to closeout</div>
+        <div class="step-desc">From the first submittal to the final O&M manual — WorksiteTrack keeps the record so you don't have to.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-bg" id="pricing">
+  <div class="section-inner">
+    <div class="section-tag">Transparent pricing</div>
+    <h2 style="color:var(--white);">No surprises. <em>No sales calls required.</em></h2>
+    <p class="section-sub">Start with the base system. Add modules as your needs grow. Cancel any month — no contracts.</p>
+
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-name">Starter</div>
+        <div class="pricing-price">$99</div>
+        <div class="pricing-period">per month — up to 5 full users</div>
+        <ul class="pricing-features">
+          <li>Projects, RFIs, Change Orders</li>
+          <li>Specifications & Submittal Tracking</li>
+          <li>Work Items with Spare Parts</li>
+          <li>Test & Inspection Records</li>
+          <li>Purchasing & Vendor Management</li>
+          <li>Scheduling with Trade Categories</li>
+          <li>Time Cards (unlimited field users)</li>
+          <li>O&M Report & Spare Parts Report</li>
+          <li>Document & File Storage</li>
+        </ul>
+        <a href="#demo" class="pricing-cta pricing-cta-outline">Request a Demo</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-name">Starter + Growth</div>
+        <div class="pricing-price" style="color:var(--navy);">$99+</div>
+        <div class="pricing-period" style="color:var(--slate);">base + $20 per additional 5 users</div>
+        <ul class="pricing-features">
+          <li>Everything in Starter</li>
+          <li>6–10 users: $119/mo</li>
+          <li>11–15 users: $139/mo</li>
+          <li>16–20 users: $159/mo</li>
+          <li>And so on — simple, predictable pricing</li>
+          <li>Unlimited time card-only users always included</li>
+          <li>All add-on modules available at any tier</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="#demo" class="pricing-cta pricing-cta-solid">Get Started →</a>
+      </div>
+    </div>
+
+    <div style="margin-bottom:20px;">
+      <div style="font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--orange); margin-bottom:20px;">Add-on modules — bolt on what you need</div>
+      <div class="modules-grid">
+        <div class="module-card">
+          <div class="module-price">$49<span style="font-size:16px;color:rgba(255,255,255,0.5)">/mo</span></div>
+          <div class="module-name">PinPoint</div>
+          <div class="module-desc">Visual install tracking on drawings. Drop pins, track linear footage, see real progress.</div>
+        </div>
+        <div class="module-card">
+          <div class="module-price">$29<span style="font-size:16px;color:rgba(255,255,255,0.5)">/mo</span></div>
+          <div class="module-name">SOV / Billing</div>
+          <div class="module-desc">Schedule of values and progress billing for owners using pay applications.</div>
+        </div>
+        <div class="module-card">
+          <div class="module-price">$25<span style="font-size:16px;color:rgba(255,255,255,0.5)">/mo</span></div>
+          <div class="module-name">Fabrication</div>
+          <div class="module-desc">Track shop fabrication orders, materials, and delivery to the field.</div>
+        </div>
+        <div class="module-card">
+          <div class="module-price">$20<span style="font-size:16px;color:rgba(255,255,255,0.5)">/mo</span></div>
+          <div class="module-name">Prevailing Wage</div>
+          <div class="module-desc">Certified payroll and prevailing wage rate tracking for public works projects.</div>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size:13px; color:rgba(255,255,255,0.4); text-align:center;">
+      All prices in USD. Billed monthly. No setup fees. No long-term contracts.
+    </p>
+  </div>
+</section>
+
+<!-- DEMO FORM -->
+<section class="demo-bg" id="demo">
+  <div class="section-inner">
+    <div class="demo-inner">
+      <div class="demo-left">
+        <div class="section-tag">Ready to see it?</div>
+        <h2>Let's show you <em>what it can do</em></h2>
+        <p style="font-size:16px; color:var(--slate); line-height:1.7; margin-bottom:8px;">
+          We'll walk you through a live demo tailored to your trade and project type.
+          No canned presentations — just your questions, answered.
+        </p>
+        <ul class="demo-points">
+          <li>
+            <div class="demo-point-icon">🎯</div>
+            <div><strong>Personalized demo</strong><br>We focus on the features most relevant to your work.</div>
+          </li>
+          <li>
+            <div class="demo-point-icon">⚡</div>
+            <div><strong>Fast setup</strong><br>If you decide to move forward, we'll have you up and running the same week.</div>
+          </li>
+          <li>
+            <div class="demo-point-icon">🔒</div>
+            <div><strong>No pressure</strong><br>No sales team. No follow-up calls unless you want them. Just an honest look at the product.</div>
+          </li>
+        </ul>
+      </div>
+      <div class="demo-form" id="demo-form-container">
+        <h3 style="font-family:'DM Serif Display',serif; font-size:24px; margin-bottom:8px;">Request a Demo</h3>
+        <p style="font-size:14px; color:var(--slate); margin-bottom:24px;">We'll be in touch within one business day.</p>
+        <form id="demo-form" onsubmit="submitDemo(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>First name *</label>
+              <input type="text" name="firstName" required placeholder="Justin" />
+            </div>
+            <div class="form-group">
+              <label>Last name *</label>
+              <input type="text" name="lastName" required placeholder="Caspersen" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Company *</label>
+            <input type="text" name="company" required placeholder="Hosler Corp." />
+          </div>
+          <div class="form-group">
+            <label>Trade / Industry *</label>
+            <select name="trade" required>
+              <option value="">Select your trade…</option>
+              <option>HVAC / Sheet Metal</option>
+              <option>Plumbing</option>
+              <option>Mechanical (HVAC + Plumbing)</option>
+              <option>Pipe Fitting / Piping</option>
+              <option>Electrical</option>
+              <option>Fire Protection</option>
+              <option>General Contractor</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Email *</label>
+              <input type="email" name="email" required placeholder="you@company.com" />
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="tel" name="phone" placeholder="570-555-0100" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Anything you'd like us to know?</label>
+            <textarea name="message" placeholder="Company size, specific features you're interested in, current tools you use…"></textarea>
+          </div>
+          <div id="form-error" style="display:none; color:#dc2626; font-size:13px; margin-bottom:12px;"></div>
+          <button type="submit" class="form-submit" id="form-btn">Request my demo →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Worksite<span>Track</span></div>
+  <div class="footer-links">
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#demo">Contact</a>
+    <a href="https://app.worksitetrack.com">Sign in</a>
+  </div>
+  <div class="footer-copy">© 2026 WorksiteTrack. Built for the trades.</div>
+</footer>
+
+<script>
+async function submitDemo(e) {
+  e.preventDefault()
+  const btn = document.getElementById('form-btn')
+  const err = document.getElementById('form-error')
+  btn.disabled = true
+  btn.textContent = 'Sending…'
+  err.style.display = 'none'
+
+  const form = e.target
+  const data = {
+    firstName: form.firstName.value,
+    lastName:  form.lastName.value,
+    company:   form.company.value,
+    trade:     form.trade.value,
+    email:     form.email.value,
+    phone:     form.phone.value,
+    message:   form.message.value,
+  }
+
+  try {
+    const res = await fetch('https://worksitetrack-api-production.up.railway.app/demo-request', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    if (!res.ok) throw new Error('Failed')
+    document.getElementById('demo-form-container').innerHTML = `
+      <div class="form-success">
+        <div class="check">🎉</div>
+        <h3>You're on the list!</h3>
+        <p>Thanks ${data.firstName}. We'll be in touch within one business day to schedule your demo.</p>
+      </div>
+    `
+  } catch {
+    err.textContent = 'Something went wrong. Please email us at admin@worksitetrack.com'
+    err.style.display = 'block'
+    btn.disabled = false
+    btn.textContent = 'Request my demo →'
+  }
+}
+</script>
+</body>
+</html>
