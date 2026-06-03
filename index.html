@@ -130,16 +130,37 @@
     .hero-stat-num span { color: var(--orange); }
     .hero-stat-label { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 4px; }
 
-    /* ── SCREENSHOT ── */
+    /* ── SCREENSHOT GALLERY ── */
     .screenshot-section {
       background: var(--navy2);
       padding: 0 48px 80px;
     }
+    .screenshot-tabs {
+      max-width: 1100px; margin: 0 auto 0;
+      display: flex; gap: 6px; flex-wrap: wrap;
+      padding-bottom: 0;
+    }
+    .screenshot-tab {
+      padding: 8px 16px;
+      border-radius: 8px 8px 0 0;
+      font-size: 12px; font-weight: 600;
+      color: rgba(255,255,255,0.45);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-bottom: none;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .screenshot-tab:hover { color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.09); }
+    .screenshot-tab.active { color: #fff; background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.15); }
     .screenshot-container {
       max-width: 1100px; margin: 0 auto;
       background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 16px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 0 8px 16px 16px;
+      overflow: hidden;
       box-shadow: 0 40px 80px rgba(0,0,0,0.4);
     }
     .screenshot-bar {
@@ -149,20 +170,11 @@
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
     .dot { width: 12px; height: 12px; border-radius: 50%; }
-    .screenshot-placeholder {
-      height: 480px;
-      display: flex; align-items: center; justify-content: center;
-      background: linear-gradient(135deg, rgba(11,31,58,0.8) 0%, rgba(20,46,82,0.6) 100%);
-      flex-direction: column; gap: 16px;
-    }
-    .screenshot-placeholder p {
-      color: rgba(255,255,255,0.3); font-size: 13px;
-      font-style: italic;
-    }
     .screenshot-img {
       width: 100%; display: block;
-      border-radius: 0;
     }
+    .screenshot-panel { display: none; }
+    .screenshot-panel.active { display: block; }
 
     /* ── SECTIONS ── */
     section { padding: 100px 48px; }
@@ -454,20 +466,62 @@
   </div>
 </section>
 
-<!-- SCREENSHOT -->
+<!-- SCREENSHOT GALLERY -->
 <div class="screenshot-section">
+  <div class="screenshot-tabs" id="screenshotTabs">
+    <div class="screenshot-tab active" data-tab="0">Dashboard</div>
+    <div class="screenshot-tab" data-tab="1">Time Cards</div>
+    <div class="screenshot-tab" data-tab="2">Daily Reports</div>
+    <div class="screenshot-tab" data-tab="3">Work Items</div>
+    <div class="screenshot-tab" data-tab="4">PinPoint</div>
+    <div class="screenshot-tab" data-tab="5">Change Orders</div>
+    <div class="screenshot-tab" data-tab="6">Submittals</div>
+    <div class="screenshot-tab" data-tab="7">Pay Apps</div>
+  </div>
   <div class="screenshot-container">
     <div class="screenshot-bar">
       <div class="dot" style="background:#FF5F57"></div>
       <div class="dot" style="background:#FEBC2E"></div>
       <div class="dot" style="background:#28C840"></div>
     </div>
-    <div class="screenshot-placeholder">
-      <div style="font-size:48px;">📋</div>
-      <p>Screenshot coming soon — contact us for a live demo</p>
+    <div class="screenshot-panel active" data-panel="0">
+      <img src="/screenshots/Dashboard.jpg" alt="Dashboard" class="screenshot-img" loading="lazy">
+    </div>
+    <div class="screenshot-panel" data-panel="1">
+      <img src="/screenshots/Time Card Log.jpg" alt="Time Cards" class="screenshot-img" loading="lazy">
+    </div>
+    <div class="screenshot-panel" data-panel="2">
+      <img src="/screenshots/Daily Report Log.jpg" alt="Daily Reports" class="screenshot-img" loading="lazy">
+    </div>
+    <div class="screenshot-panel" data-panel="3">
+      <img src="/screenshots/Work Items Log.jpg" alt="Work Items" class="screenshot-img" loading="lazy">
+    </div>
+    <div class="screenshot-panel" data-panel="4">
+      <img src="/screenshots/PinPoint Drawing Screen.jpg" alt="PinPoint" class="screenshot-img" loading="lazy">
+    </div>
+    <div class="screenshot-panel" data-panel="5">
+      <img src="/screenshots/Change Order Calculator.jpg" alt="Change Orders" class="screenshot-img" loading="lazy">
+    </div>
+    <div class="screenshot-panel" data-panel="6">
+      <img src="/screenshots/Submittal Log.jpg" alt="Submittals" class="screenshot-img" loading="lazy">
+    </div>
+    <div class="screenshot-panel" data-panel="7">
+      <img src="/screenshots/Pay App.jpg" alt="Pay Applications" class="screenshot-img" loading="lazy">
     </div>
   </div>
 </div>
+
+<script>
+  document.getElementById('screenshotTabs').addEventListener('click', function(e) {
+    const tab = e.target.closest('.screenshot-tab')
+    if (!tab) return
+    const idx = tab.dataset.tab
+    document.querySelectorAll('.screenshot-tab').forEach(t => t.classList.remove('active'))
+    document.querySelectorAll('.screenshot-panel').forEach(p => p.classList.remove('active'))
+    tab.classList.add('active')
+    document.querySelector(`.screenshot-panel[data-panel="${idx}"]`).classList.add('active')
+  })
+</script>
 
 <!-- FEATURES -->
 <section class="features-bg" id="features">
